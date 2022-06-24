@@ -1,7 +1,7 @@
 import './css/styles.css';
 import { fetchCountries } from "./fetchCountries.js"
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import ref from './ref';
+import { ref } from './ref';
 var debounce = require('lodash.debounce');
 
 
@@ -26,7 +26,7 @@ function onInput(event) {
     })
         .then(countryFilter);
 };
-// ll
+
 function countryFilter(data) {
    
     if (data.length === 1) {
