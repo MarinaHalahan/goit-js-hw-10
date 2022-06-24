@@ -18,7 +18,9 @@ body {
   max-width: 320px;
   margin-bottom: 16px;
 }
-
+ul{
+  list-style: none;
+}
 img {
   width: 40px;
   height: 40px;
@@ -37,4 +39,8 @@ flex-direction:column;
 align-items: center;
 font-weight: 600;
   
+}
+.countries_box{
+  display: flex;
+align-items: center;
 }

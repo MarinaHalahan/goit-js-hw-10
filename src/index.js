@@ -11,54 +11,67 @@ ref = {
     countryList: document.querySelector(".country-list"),
     countryInfo: document.querySelector(".country-info"),
 };
+let name;
 
 
+ref.input.addEventListener("input", debounce(onInput, DEBOUNCE_DELAY));
 
-ref.input.addEventListener("input", debounce(onclick, DEBOUNCE_DELAY))
-function onclick(event) {
-    console.log(event);
+function onInput(event) {
+    
+    name = (event.target.value).trim();
+
+    if (name === "") {
+       cleanerMarkup()
+        return;
+    }
+    fetchCountries(`${name}`).then((data) => {
+        return data;
+    })
+        .then(countryFilter);
+};
+
+function countryFilter(data) {
    
-  
-    let name = (event.target.value).trim();
-    
+    if (data.length === 1) {
+        markupForOneCountry(data);
+    };
 
-        fetchCountries(`${name}`).then((data) => {
-            console.log(data);
-            return data;
-        })
-    
-    .then(maxLength);
-
-
-    
-       
-}
-    
-function maxLength(data) {
     if (data.length>2 && data.length< 10) {
-    let markup = data.map(({ flags, name }) => {
-        return `<li class = "country_item"><img src="${flags.svg}"  alt="flag of ${name.official}" ><p>${name.official}</p></li>`
+        markupForListOfCountries(data) 
+    };
 
-    }).join("");
-         console.log(markup);
-       return  ref.countryList.innerHTML = markup;
-
-     
-}
-      
-       if (data.length >= 10) {
+    if (data.length >= 10) {
+       cleanerMarkup()
       return  Notify.info("Too many matches found. Please enter a more specific name.");
-       }
+    };
+};
+
+function markupForOneCountry(data) {
+    ref.countryList.innerHTML = "";
+    let markup = data.map(({ flags, name, capital, population, languages }) => {
+        return `<div class ="countries_box"><img src="${flags.svg}" alt="flag of ${name.official}">
+      <h1>${name.official}</h1></div>
+      <ul class = "country_list">
+        <li><p><b>Capital: </b>${capital}</p></li>
+        <li><p><b>Population: </b>${population}</p></li>
+        <li><p><b>Languages: </b>${Object.values(languages)}</p></li>
+      </ul>`}).join("");
+         
+    return ref.countryInfo.innerHTML = markup;
+};
+
+function markupForListOfCountries(data) {
+       ref.countryInfo.innerHTML = "";
+    let markup = data.map(({ flags, name }) => {
+        return `<li class = "country_item"><img src="${flags.svg}"alt="flag of ${name.official}" ><p>${name.official}</p></li>`
+    }).join("");
       
-  
+    return  ref.countryList.innerHTML = markup;
+};
+
+function cleanerMarkup() {
+    ref.countryList.innerHTML = "";
+    ref.countryInfo.innerHTML = "";
 }
-
-
-// function filterByName(data) {
-   
-
-// }
-
-
- 
+  
     
