@@ -8,7 +8,8 @@ export function fetchCountries(name) {
            return response.json()
          }
          Notify.failure("Oops, there is no country with that name");
-        cleanerMarkup() 
+         ref.countryList.innerHTML = "";
+        ref.countryInfo.innerHTML = "";
          throw new Error(response.statusText);
           
        }
