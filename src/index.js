@@ -33,11 +33,11 @@ function countryFilter(data) {
         markupForOneCountry(data);
     };
 
-    if (data.length>2 && data.length< 10) {
+    if (data.length>=2 && data.length<= 10) {
         markupForListOfCountries(data) 
     };
 
-    if (data.length >= 10) {
+    if (data.length > 10) {
        cleanerMarkup()
       return  Notify.info("Too many matches found. Please enter a more specific name.");
     };
